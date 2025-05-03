@@ -1,0 +1,16 @@
+user_agent: "Mozilla/5.0 (compatible; scraper/2.0)"
+base_url: "https://anukari.com" 
+start_url: "https://anukari.com/blog/devlog/archive"
+item_url_selector: 'a[href^="/blog/devlog/"]:not([href="/blog/devlog/"]):not([href*="archive"])'
+fields:
+  text:
+    selector: "main, article"
+    remove: ["nav", "footer", "img", "figure", "script", "style"]
+    join_with: "\n"
+  title:
+    selector: "h1"
+    exclude_equals: ["devlog"]
+  date:
+    regex: '\b\d{1,2}/\d{1,2}/\d{4},\s*\d{1,2}:\d{2}:\d{2}\s*[AP]M\b'
+    strptime: "%m/%d/%Y, %I:%M:%S %p"
+output_columns: ["text", "title", "date"]
